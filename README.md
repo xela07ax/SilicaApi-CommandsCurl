@@ -43,7 +43,7 @@ curl -H "Content-Type: application/json" -X POST http://localhost:30339/ngapi/ge
 ```
 Ожидаем ответ
 ```json
-[{"Id":1,"Command":"mvn","Args":["test"]},{"Id":2,"Command":"mvn","Args":["test"]},{"Id":3,"Command":"mvn","Args":["test"]}]
+[{"ProjectId":-1,"CmdId":1,"Status":{"Code":0,"Text":"","Date":"1754-08-31T01:43:41.128654848+03:00"},"StatusHistory":null,"Command":"mvn","Args":["test"]}]
 ```
 ## Remove Cmd from project !!*not check
 ```sh
@@ -55,9 +55,18 @@ curl -H "Content-Type: application/json" -X POST http://localhost:30339/ngapi/de
 ```
 ## Start Cmd
 ```sh
-curl -H "Content-Type: application/json" -X POST http://localhost:30339/ngapi/run -d "{\"ProjectId\":8000001,\"CmdId\":2}"
+curl -H "Content-Type: application/json" -X POST http://localhost:30339/ngapi/run -d "{\"ProjectId\":8000001,\"CmdId\":1}"
 ```
 Ожидаем ответ
 ```json
 {"FuncName":"CreateTest","Text":"CMD команда удалена успешно","Status":0,"List":null,"Show":true,"UpdNum":0}
+```
+## InfoCMD
+Читаем историю
+```sh
+curl -H "Content-Type: application/json" -X POST http://localhost:30339/ngapi/getCmdInfo -d "{\"ProjectId\":8000001,\"CmdId\":1}"
+```
+Установим статус команде
+```sh
+curl -H "Content-Type: application/json" -X POST http://localhost:30339/ngapi/getCmdSetStatus -d "{\"ProjectId\":8000001,\"CmdId\":1,\"Status\":{\"Code\":1}}"
 ```
